@@ -16,16 +16,7 @@ public class MovementController : MonoBehaviour
         _camera = Camera.main;
         _outline = GetComponent<Outline>();
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Outline>(out Outline outline))
-        {
-            _outline.OutlineWidth = 2;
-            other.gameObject.SetActive(false);
-        }
-    }
-
+    
     private void Update()
     {
         // Перемещаем персонажа в направлении _destination.

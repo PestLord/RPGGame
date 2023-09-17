@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 
 public class Bridge : MonoBehaviour
 {
-    [SerializeField] private GameObject _fire;
     private Rigidbody[] _rigidbodies;
     private NavMeshObstacle _navMeshObstacle;
     private Collider _collider;
@@ -22,23 +21,15 @@ public class Bridge : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent<PlayerController>(out var playerController))
         {
-            if (other.GetComponent<Outline>().OutlineWidth == 0)
+            if (!playerController.HasProtectedPotion)
             {
                 Break();
             }
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _fire.SetActive(true);
-        }
-    }
-
+    
     public void Break()
     {
         // Вырезаем отверстие в навмеш (чтобы игрок там больше не смог пройти)
